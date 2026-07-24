@@ -37,8 +37,6 @@ import {
   Person as PersonIcon,
   Logout as LogoutIcon,
   CheckCircle as ActiveIcon,
-  Error as ErrorIcon,
-  Warning as WarningIcon,
   Link as LinkIcon,
   Security as SecurityIcon,
   Timeline as TimelineIcon,
@@ -58,12 +56,10 @@ const Dashboard: React.FC = () => {
   const { 
     networks, 
     nodes, 
-    alerts, 
     loading, 
     error, 
     fetchNetworks, 
-    fetchNodes, 
-    fetchAlerts,
+    fetchNodes,
     createNetwork,
   } = useApi();
   
@@ -78,7 +74,6 @@ const Dashboard: React.FC = () => {
     // Initial data fetch
     fetchNetworks();
     fetchNodes();
-    fetchAlerts();
   }, []);
 
   const handleUserMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -117,7 +112,6 @@ const Dashboard: React.FC = () => {
   const activeNodes = nodes.filter(n => n.status === 'active').length;
   const totalNetworks = networks.length;
   const totalNodes = nodes.length;
-  const activeAlerts = alerts.filter(a => a.status !== 'resolved').length;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -217,22 +211,6 @@ const Dashboard: React.FC = () => {
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Box>
                   <Typography variant="h4" component="div">
-                    {activeAlerts}
-                  </Typography>
-                  <Typography color="text.secondary">
-                    Active Alerts
-                  </Typography>
-                </Box>
-                <WarningIcon sx={{ fontSize: 40, color: 'warning.main' }} />
-              </Box>
-            </CardContent>
-          </Card>
-          
-          <Card sx={{ minWidth: 250, flex: '1 1 250px' }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Box>
-                  <Typography variant="h4" component="div">
                     OK
                   </Typography>
                   <Typography color="text.secondary">
@@ -297,31 +275,6 @@ const Dashboard: React.FC = () => {
             </CardContent>
           </Card>
           
-          <Card sx={{ flex: '1 1 300px', minWidth: 300 }}>
-            <CardContent>
-              <Typography variant="h6" sx={{ mb: 2 }}>Recent Alerts</Typography>
-              <List>
-                {alerts.slice(0, 5).map((alert) => (
-                  <ListItem key={alert.id}>
-                    <ListItemText
-                      primary={alert.title}
-                      secondary={alert.description || 'No description'}
-                    />
-                    <Chip
-                      label={alert.severity}
-                      color={alert.severity === 'high' ? 'error' : alert.severity === 'medium' ? 'warning' : 'info'}
-                      size="small"
-                    />
-                  </ListItem>
-                ))}
-                {alerts.length === 0 && (
-                  <ListItem>
-                    <ListItemText primary="No alerts" />
-                  </ListItem>
-                )}
-              </List>
-            </CardContent>
-          </Card>
         </Box>
       </Container>
 

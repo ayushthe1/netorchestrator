@@ -96,15 +96,15 @@ const TopologyInfoPanel: React.FC<TopologyInfoPanelProps> = ({
   return (
     <Box sx={{ 
       height: '100%', 
-      backgroundColor: '#0f172a', 
-      backgroundImage: 'radial-gradient(circle, #1e293b 1px, transparent 1px)',
+      backgroundColor: '#000000', 
+      backgroundImage: 'radial-gradient(circle, #333333 1px, transparent 1px)',
       backgroundSize: '20px 20px',
       color: 'white',
       display: 'flex',
       flexDirection: 'column',
     }}>
       {/* Header */}
-      <Box sx={{ p: 2, borderBottom: '1px solid #1e293b' }}>
+      <Box sx={{ p: 2, borderBottom: '1px solid #333333' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
           <Box sx={{ 
             width: 8, 

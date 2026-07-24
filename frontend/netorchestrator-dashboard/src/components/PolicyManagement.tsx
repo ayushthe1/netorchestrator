@@ -204,6 +204,7 @@ const PolicyManagement: React.FC = () => {
       const policyData = {
         name: formData.name,
         type: formData.type,  // Changed from policy_type to type
+        description: formData.description || undefined,
         config: {
           rules: formData.rules.map((rule, index) => ({
             id: rule.id || `rule-${index + 1}`,
@@ -220,11 +221,6 @@ const PolicyManagement: React.FC = () => {
           priority: formData.priority
         },
       };
-      
-      // Add description if provided
-      if (formData.description) {
-        policyData.description = formData.description;
-      }
 
       if (editMode && selectedPolicy) {
         // Update policy

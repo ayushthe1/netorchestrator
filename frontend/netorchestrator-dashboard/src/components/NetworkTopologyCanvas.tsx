@@ -238,8 +238,8 @@ const NetworkTopologyCanvas: React.FC<NetworkTopologyCanvasProps> = ({
     <Box sx={{ 
       width: '100%', 
       height: '100%', 
-      backgroundColor: '#0f172a',
-      backgroundImage: 'radial-gradient(circle, #1e293b 1px, transparent 1px)',
+      backgroundColor: '#000000',
+      backgroundImage: 'radial-gradient(circle, #333333 1px, transparent 1px)',
       backgroundSize: '20px 20px',
       position: 'relative',
       '& .react-flow__edge': {
@@ -277,20 +277,20 @@ const NetworkTopologyCanvas: React.FC<NetworkTopologyCanvasProps> = ({
         attributionPosition="bottom-left"
       >
         <Background 
-          color="#1e293b" 
+          color="#333333" 
           size={1} 
-          style={{ backgroundColor: '#0f172a' }}
+          style={{ backgroundColor: '#000000' }}
         />
         <Controls 
           style={{
-            background: 'rgba(30, 41, 59, 0.8)',
-            border: '1px solid #1e293b',
+            background: 'rgba(0, 0, 0, 0.8)',
+            border: '1px solid #333333',
           }}
         />
         <MiniMap 
           style={{
-            background: 'rgba(30, 41, 59, 0.8)',
-            border: '1px solid #1e293b',
+            background: 'rgba(0, 0, 0, 0.8)',
+            border: '1px solid #333333',
           }}
           nodeColor={(node) => {
             switch (node.data.status) {
@@ -310,10 +310,11 @@ const NetworkTopologyCanvas: React.FC<NetworkTopologyCanvasProps> = ({
           top: 16, 
           left: 16, 
           zIndex: 10,
-          backgroundColor: 'rgba(30, 41, 59, 0.9)',
+          backgroundColor: 'rgba(0, 0, 0, 0.9)',
           padding: '8px 16px',
           borderRadius: 1,
           color: 'white',
+          border: '1px solid #333333',
         }}
       >
         <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>

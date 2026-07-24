@@ -35,8 +35,6 @@ import {
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
   CheckCircle as ActiveIcon,
-  Error as ErrorIcon,
-  Warning as WarningIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import { useApi } from '../contexts/ApiContext';
@@ -44,7 +42,6 @@ import NetworkManagement from './NetworkManagement';
 import NodeManagement from './NodeManagement';
 import LinkManagement from './LinkManagement';
 import PolicyManagement from './PolicyManagement';
-import MetricsMonitoring from './MetricsMonitoring';
 import NetworkMetricsView from './NetworkMetricsView';
 import NetworkTopology from './NetworkTopology';
 
@@ -74,12 +71,10 @@ const MainDashboard: React.FC = () => {
   const { 
     networks, 
     nodes, 
-    alerts, 
     loading, 
     error, 
     fetchNetworks, 
-    fetchNodes, 
-    fetchAlerts,
+    fetchNodes,
   } = useApi();
   
   const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);
@@ -90,7 +85,6 @@ const MainDashboard: React.FC = () => {
     // Initial data fetch
     fetchNetworks();
     fetchNodes();
-    fetchAlerts();
   }, []);
 
   const handleUserMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -110,7 +104,6 @@ const MainDashboard: React.FC = () => {
   const activeNodes = nodes.filter(n => n.status === 'active').length;
   const totalNetworks = networks.length;
   const totalNodes = nodes.length;
-  const activeAlerts = alerts.filter(a => a.status !== 'resolved').length;
 
   const menuItems = [
     { id: 'overview', label: 'Overview', icon: <DashboardIcon /> },
@@ -119,7 +112,6 @@ const MainDashboard: React.FC = () => {
     { id: 'nodes', label: 'Nodes', icon: <NodeIcon /> },
     { id: 'links', label: 'Links', icon: <LinkIcon /> },
     { id: 'policies', label: 'Policies', icon: <SecurityIcon /> },
-    { id: 'monitoring', label: 'System Monitoring', icon: <TimelineIcon /> },
     { id: 'network-metrics', label: 'Network Metrics', icon: <NetworkIcon /> },
   ];
 
@@ -172,21 +164,6 @@ const MainDashboard: React.FC = () => {
                 </CardContent>
               </Card>
               
-              <Card sx={{ minWidth: 250, flex: '1 1 250px' }}>
-                <CardContent>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Box>
-                      <Typography variant="h4" component="div">
-                        {activeAlerts}
-                      </Typography>
-                      <Typography color="text.secondary">
-                        Active Alerts
-                      </Typography>
-                    </Box>
-                    <WarningIcon sx={{ fontSize: 40, color: 'warning.main' }} />
-                  </Box>
-                </CardContent>
-              </Card>
             </Box>
 
             {/* Recent Networks */}
@@ -235,34 +212,6 @@ const MainDashboard: React.FC = () => {
               </CardContent>
             </Card>
 
-            {/* Recent Alerts */}
-            {activeAlerts > 0 && (
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Recent Alerts
-                  </Typography>
-                  <List>
-                    {alerts.slice(0, 5).map((alert) => (
-                      <ListItemButton key={alert.id}>
-                        <ListItemIcon>
-                          {alert.severity === 'high' ? <ErrorIcon color="error" /> : <WarningIcon color="warning" />}
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={alert.title}
-                          secondary={alert.description}
-                        />
-                        <Chip
-                          label={alert.severity}
-                          color={alert.severity === 'high' ? 'error' : alert.severity === 'medium' ? 'warning' : 'info'}
-                          size="small"
-                        />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
-            )}
           </Box>
         );
       
@@ -280,9 +229,6 @@ const MainDashboard: React.FC = () => {
       
       case 'policies':
         return <PolicyManagement />;
-      
-      case 'monitoring':
-        return <MetricsMonitoring />;
       
       case 'network-metrics':
         return <NetworkMetricsView />;
@@ -315,19 +261,6 @@ const MainDashboard: React.FC = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <IconButton color="inherit">
               <NotificationsIcon />
-              {activeAlerts > 0 && (
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 8,
-                    right: 8,
-                    width: 8,
-                    height: 8,
-                    bgcolor: 'error.main',
-                    borderRadius: '50%',
-                  }}
-                />
-              )}
             </IconButton>
             
             <IconButton color="inherit" onClick={handleUserMenuClick}>
